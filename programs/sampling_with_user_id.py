@@ -1,7 +1,7 @@
 import json
 
 # Load the sampled business IDs
-f = open("yelp_dataset/tip_sample.json", "r", encoding="utf-8")
+f = open("../yelp_dataset/tip_sample.json", "r", encoding="utf-8")
 businesses = json.load(f)
 f.close()
 
@@ -11,20 +11,29 @@ for b in businesses:
         user_ids.add(b["user_id"])
 
 # Collect matching tips into a list
-fin = open("yelp_dataset/yelp_academic_dataset_user.json", "r", encoding="utf-8")
-tips = []
+fout = open("user_sample.json", "w", encoding="utf-8")
+fin = open("yelp_academic_dataset_user.json", "r", encoding="utf-8")
 
+
+fout.write("[")
+first=True
 for line in fin:
     line = line.strip()
     if line == "":
         continue
     obj = json.loads(line)
+
+
+
     if obj["user_id"] in user_ids:
-        tips.append(obj)
+        if not first:
+            fout.write(", \n")
+        else:
+            first = False
+        json.dump(obj, fout)
 
-fin.close()
-
+fout.write("]\n")        
 # Save as a JSON array (same style as your business_sample.json)
-fout = open("yelp_dataset/user_sample.json", "w", encoding="utf-8")
-json.dump(tips, fout, indent=2)
+
 fout.close()
+fin.close()

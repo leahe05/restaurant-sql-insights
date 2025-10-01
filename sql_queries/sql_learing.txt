@@ -1,30 +1,32 @@
-I am putting all the new queries i leaned for sQL in this project
-
 -- ==============================
--- COUNT and GROUP BY Notes
--- ==============================
-
 -- COUNT
--- -----
+-- ==============================
 -- Type: aggregate function
 -- What it does: counts rows in a table (or in a group)
 -- Variations:
 --   COUNT(*)       -> counts all rows
 --   COUNT(column)  -> counts only rows where that column is not NULL
 -- Example meaning: "How many rows are there?"
-
+-- ==============================
 -- GROUP BY
--- --------
+-- ==============================
 -- Type: clause (not a function)
 -- What it does: groups rows together that share the same value(s)
--- Why: allows aggregate functions (COUNT, SUM, AVG, etc.)
---      to be applied to each group instead of the whole table
--- Example meaning: "Split the table by city, then count each city separately"
-
--- Relationship
--- ------------
--- COUNT works on sets of rows.
--- GROUP BY defines the sets.
--- Without GROUP BY -> COUNT gives one number for the whole table.
--- With GROUP BY    -> COUNT gives one number per group.
+-- Why: lets aggregate functions (COUNT, SUM, AVG, etc.)
+--      run on each group instead of the whole table
+-- Example meaning: "Split the table by city, then count each city separately
+-- ==============================
+-- HAVING
+-- ==============================
+-- Type: clause
+-- When it runs: after grouping/aggregation
+-- What it does: filters groups that were created by GROUP BY
+-- Difference from WHERE:
+--   - WHERE filters individual rows before grouping
+--   - HAVING filters whole groups after aggregation
+-- Example: only keep cities that have more than 10 businesses
+-- SELECT city, COUNT(*)
+-- FROM business
+-- GROUP BY city
+-- HAVING COUNT(*) > 10;
 

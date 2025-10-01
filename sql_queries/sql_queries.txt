@@ -55,3 +55,16 @@ FROM user_sample
 GROUP BY user_id
 HAVING c>1;
 
+USE yelp_reviews;
+SELECT user_id, COUNT(*) AS c
+FROM user_sample
+GROUP BY user_id
+HAVING c>1;
+
+-- only dupes are in the review texts next step is to clean it 
+USE yelp_reviews;
+SELECT user_id, business_id, text ,COUNT(*) AS c
+FROM review_sample
+GROUP BY user_id, business_id, text
+HAVING c>1; 
+
